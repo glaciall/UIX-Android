@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.bobaoo.xiaobao.common.Global;
 import com.youaix.framework.common.Configuration;
+import com.youaix.framework.common.Global;
 import com.youaix.framework.common.ImageCache;
 import com.youaix.framework.common.Location;
 import com.youaix.framework.common.Schema;
@@ -72,7 +72,6 @@ public abstract class Page extends Activity implements Callbackable
 	private int requestCode = 0;
 	private String requestPage = null;
 	private String formAction = null;
-	protected User user;
 	protected boolean loadingImage = false;
 	
 	private HashMap<Integer, Image> images = null;
@@ -94,9 +93,6 @@ public abstract class Page extends Activity implements Callbackable
 
 			// 页面初始化，回调及参数等
 			this.init();
-			
-			// 登录身份验证
-			this.user = Global.getLoginUser();
 			
 			this.createPage();
 			this.formAction = this.createForm();
@@ -207,31 +203,12 @@ public abstract class Page extends Activity implements Callbackable
 			this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED);
 			PageManager.getInstance().setCurrent(this);
 			ImageCache.getInstance().pageResumed(this);
-			// this.user = Global.getLoginUser();
 			if (this.isResumed || this.isChecked)
 			{
-				// TODO: 如果需要登录，但是没有登录，就可以把当前页面关掉了
-				if (this.isLogin())
-				{
-					if (null == this.user)
-					{
-						if (this.isTaskRoot())
-						{
-							PageManager.getInstance().redirect(Class.forName(Configuration.getInstance().getProperty("index_page")), true);
-						}
-						else this.finish();
-						return;
-					}
-					else
-					{
-						if (!this.isResumed) this.onLoad();
-					}
-				}
 				this.resume();
 			}
 			else
 			{
-				this.checkLogin();
 				this.isResumed = true;
 				this.onLoad();
 				this.debug();
@@ -508,7 +485,7 @@ public abstract class Page extends Activity implements Callbackable
 	// 播放视频
 	public final void playVideo(String videoUrl)
 	{
-		PageManager.getInstance().redirect(VideoPlayer.class, parameter("video-url", videoUrl), false);
+		// PageManager.getInstance().redirect(VideoPlayer.class, parameter("video-url", videoUrl), false);
 	}
 
 	// 输入法
@@ -579,37 +556,7 @@ public abstract class Page extends Activity implements Callbackable
 	// 当页面出错时调用
 	protected void onError(Exception ex)
 	{
-		if (ex instanceof com.youaix.framework.issue.NotLoginException)
-		{
-			tip(ex.getMessage());
-			try
-			{
-				PageManager.getInstance().redirect(Class.forName(Configuration.getInstance().getProperty("user_login_page")), parameter("page-before-login", this.requestPage), false);
-			}
-			catch (ClassNotFoundException e)
-			{
-				android.util.Log.e("check-login", "did you assigned right attribute value for <user_login_page> in app.properties ?");
-			}
-		}
 		ex.printStackTrace();
-	}
-
-	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// /// 用户身份相关
-
-	// 此页面是否需要登录
-	public boolean isLogin()
-	{
-		return false;
-	}
-
-	// 登录身份验证
-	protected final void checkLogin() throws Exception
-	{
-		if (!this.isLogin()) return;
-		this.isChecked = true;
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -781,84 +728,8 @@ public abstract class Page extends Activity implements Callbackable
 				}
 			}
 		};
-		
-		/*
-		Frontia.init(this.getApplicationContext(), Global.getProperty("baidu_app_key"));
-		
-		// 初始化百度APP统计模块
-		statistics = Frontia.getStatistics();
-		statistics.setSessionTimeout(500);
-		statistics.setReportId(Configuration.getInstance().getProperty("mtj_report_id"));
-		statistics.enableExceptionLog();
-		statistics.start(SendStrategyEnum.SET_TIME_INTERVAL, 10, 10, true);
-		statistics.setAppDistributionChannel(Configuration.getInstance().getProperty("channel_name"));
-		AnalyticsConfig.setChannel(Configuration.getInstance().getProperty("channel_name"));//友盟
-		// 初始化社会化分享模块
-		socialShare = Frontia.getSocialShare();
-		socialShare.setContext(this);
-		
-		socialShare.setClientId(MediaType.SINAWEIBO.toString(), Global.getProperty("social_share_sinaweibo_id"));
-		socialShare.setClientId(MediaType.QZONE.toString(), Global.getProperty("social_share_qqzone_id"));
-		socialShare.setClientId(MediaType.QQFRIEND.toString(), Global.getProperty("social_share_qqfriend_id"));
-		socialShare.setClientName(MediaType.QQFRIEND.toString(), Global.getProperty("social_share_qqfriend_name"));
-		socialShare.setClientId(MediaType.WEIXIN.toString(), Global.getProperty("social_share_weixin_id"));
-		
-		shareContent = new FrontiaSocialShareContent();
-		*/
 	} 
 	
-	/*
-	public final void share(String title, String content, String linkUrl, String imageUrl, final ShareListener listener)
-	{
-		shareContent.setTitle(title);
-		shareContent.setContent(content);
-		shareContent.setLinkUrl(linkUrl);
-		shareContent.setImageUri(Uri.parse(imageUrl));
-		
-		socialShare.show(this.getWindow().getDecorView(), shareContent, FrontiaTheme.DARK, new FrontiaSocialShareListener()
-		{
-			public void onCancel()
-			{
-				listener.onCancel();
-			}
-			public void onFailure(int errorCode, String errorMessage)
-			{
-				listener.onFailure(errorCode, errorMessage);
-			}
-			public void onSuccess()
-			{
-				listener.onSuccess();
-			}
-		});
-		this.statistics.logEvent(new FrontiaStatistics.Event("1000", title));
-	}
-	
-	public final void share(String title, String content, String linkUrl, Schema.Uri imageUri, final ShareListener listener) throws Exception
-	{
-		shareContent.setTitle(title);
-		shareContent.setContent(content);
-		shareContent.setLinkUrl(linkUrl);
-		shareContent.setImageData(BitmapFactory.decodeStream(imageUri.getReader()));
-		
-		socialShare.show(this.getWindow().getDecorView(), shareContent, FrontiaTheme.DARK, new FrontiaSocialShareListener()
-		{
-			public void onCancel()
-			{
-				listener.onCancel();
-			}
-			public void onFailure(int errorCode, String errorMessage)
-			{
-				listener.onFailure(errorCode, errorMessage);
-			}
-			public void onSuccess()
-			{
-				listener.onSuccess();
-			}
-		});
-		this.statistics.logEvent(new FrontiaStatistics.Event("1000", title));
-	}
-	*/
-
 	public void echo(String mission, Object data)
 	{
 		synchronized (this.missions)

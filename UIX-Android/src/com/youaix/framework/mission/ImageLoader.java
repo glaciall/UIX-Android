@@ -4,6 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.youaix.framework.common.Encrypt;
+import com.youaix.framework.common.FileSystem;
+import com.youaix.framework.common.ImageCache;
+import com.youaix.framework.common.Network;
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.page.PageManager;
+
 import android.graphics.*;
 
 public class ImageLoader extends Mission

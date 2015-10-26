@@ -2,6 +2,15 @@ package com.youaix.framework.mission;
 
 import org.json.JSONObject;
 
+import com.youaix.framework.common.Configuration;
+import com.youaix.framework.common.Device;
+import com.youaix.framework.common.Encrypt;
+import com.youaix.framework.common.FileSystem;
+import com.youaix.framework.common.Network;
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.issue.JsonException;
+import com.youaix.framework.page.PageManager;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.*;
@@ -46,7 +55,8 @@ public class JsonRequestor extends Mission
 			if (cacheFile.exists() && cacheFile.lastModified() + this.cacheTime > System.currentTimeMillis())
 				jsonText = new String(FileSystem.read(new FileInputStream(cacheFile)));
 		}
-		if(Device.getNetworkType()==Device.NETWORK_TYPE_NONE){
+		if (Device.getNetworkType() == Device.NETWORK_TYPE_NONE)
+		{
 			throw new Exception("无法连接到网络，请稍后再试。");
 		}
 		if (jsonText == null)

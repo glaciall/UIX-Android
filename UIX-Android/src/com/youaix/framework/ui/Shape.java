@@ -1,5 +1,7 @@
 package com.youaix.framework.ui;
 
+import com.youaix.framework.view.shape.ShapeView;
+
 import android.view.View;
 import android.view.ViewGroup;
 

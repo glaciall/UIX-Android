@@ -1,12 +1,23 @@
 ﻿package com.youaix.framework.ui;
 
+import com.youaix.framework.event.ChangeEvent;
+import com.youaix.framework.event.ClickEvent;
+import com.youaix.framework.event.DragEvent;
+import com.youaix.framework.event.HoverEvent;
+import com.youaix.framework.event.MoveEvent;
+import com.youaix.framework.event.PressEvent;
+import com.youaix.framework.event.TouchEvent;
+import com.youaix.framework.page.PageManager;
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.view.FlowLayout;
+import com.youaix.framework.view.SpinnerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
@@ -27,7 +38,7 @@ public class Select extends Element
 	{
 		super();
 		spinner = new SpinnerView(getContext());
-		adapter = new ArrayAdapter<Option>(getContext(), R.layout.simple_dropdown_item_1line)
+		adapter = new ArrayAdapter<Option>(getContext(), android.R.layout.simple_dropdown_item_1line)
 				{
 					public View getView(int position, View convertView, ViewGroup parent)
 					{

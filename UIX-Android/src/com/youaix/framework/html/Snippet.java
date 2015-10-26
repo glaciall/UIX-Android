@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.youaix.framework.ui.Element;
+
 public abstract class Snippet
 {
 	private static final Pattern VAR_PATTERNS = Pattern.compile("\\{\\$(\\w+|\\?)\\}");

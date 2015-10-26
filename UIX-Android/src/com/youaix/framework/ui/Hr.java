@@ -1,5 +1,8 @@
 ﻿package com.youaix.framework.ui;
 
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.view.HorizontalLine;
+
 import android.view.View;
 import android.view.ViewGroup;
 

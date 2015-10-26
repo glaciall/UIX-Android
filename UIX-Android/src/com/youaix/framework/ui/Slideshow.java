@@ -2,6 +2,14 @@ package com.youaix.framework.ui;
 
 import java.util.ArrayList;
 
+import com.youaix.framework.common.ImageCache;
+import com.youaix.framework.event.LoadEvent;
+import com.youaix.framework.page.Page;
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.view.CircleGifView;
+import com.youaix.framework.view.FlowLayout;
+import com.youaix.framework.view.GalleryLayout;
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;

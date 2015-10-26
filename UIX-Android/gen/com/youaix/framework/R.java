@@ -8,13 +8,23 @@
 package com.youaix.framework;
 
 public final class R {
+    public static final class animator {
+        public static int slide_in_bottom=0x7f030000;
+        public static int slide_in_right=0x7f030001;
+        public static int slide_in_top=0x7f030002;
+        public static int slide_out_bottom=0x7f030003;
+        public static int slide_out_left=0x7f030004;
+        public static int slide_out_top=0x7f030005;
+        public static int zoom_in=0x7f030006;
+        public static int zoom_out=0x7f030007;
+    }
     public static final class attr {
     }
     public static final class drawable {
         public static int ic_launcher=0x7f020000;
     }
     public static final class string {
-        public static int app_name=0x7f030000;
+        public static int app_name=0x7f040000;
     }
     public static final class style {
         /** 
@@ -38,10 +48,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static int AppBaseTheme=0x7f040000;
+        public static int AppBaseTheme=0x7f050000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static int AppTheme=0x7f040001;
+        public static int AppTheme=0x7f050001;
     }
 }

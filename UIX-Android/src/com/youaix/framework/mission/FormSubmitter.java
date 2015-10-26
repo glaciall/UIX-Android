@@ -11,6 +11,12 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 
+import com.youaix.framework.common.Configuration;
+import com.youaix.framework.common.JPEGCompress;
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.common.Schema.Uri;
+import com.youaix.framework.page.PageManager;
+
 public class FormSubmitter extends Mission
 {
 	private String url = null;

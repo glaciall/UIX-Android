@@ -2,6 +2,11 @@
 
 import java.util.*;
 
+import com.youaix.framework.common.Device;
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.mission.Callbackable;
+import com.youaix.framework.ui.Element;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;

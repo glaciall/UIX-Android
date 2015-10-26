@@ -2,6 +2,16 @@
 
 import java.util.HashMap;
 
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.event.ClickEvent;
+import com.youaix.framework.event.DragEvent;
+import com.youaix.framework.event.FocusEvent;
+import com.youaix.framework.event.HoverEvent;
+import com.youaix.framework.event.MoveEvent;
+import com.youaix.framework.event.PressEvent;
+import com.youaix.framework.event.TouchEvent;
+import com.youaix.framework.page.Page;
+
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.text.Editable;

@@ -1,5 +1,7 @@
 package com.youaix.framework.mission;
 
+import com.youaix.framework.page.PageManager;
+
 public class Timeout extends Mission
 {
 	private int timeout;

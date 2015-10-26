@@ -1,5 +1,9 @@
 package com.youaix.framework.ui;
 
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.event.TouchEvent;
+import com.youaix.framework.page.Page;
+import com.youaix.framework.page.PageManager;
 import com.youaix.framework.view.AnchorView;
 
 import android.view.View;

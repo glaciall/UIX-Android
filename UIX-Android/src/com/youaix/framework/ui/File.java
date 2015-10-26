@@ -1,5 +1,7 @@
 package com.youaix.framework.ui;
 
+import com.youaix.framework.common.Schema;
+
 import android.view.View;
 
 public class File extends Element

@@ -9,6 +9,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import com.youaix.framework.common.FileSystem;
+import com.youaix.framework.common.Schema.Uri;
+
 public class UniversalUtil
 {
 	public static Document getDOM(Uri uri) throws Exception

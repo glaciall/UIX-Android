@@ -1,5 +1,9 @@
 package com.youaix.framework.mission;
 
+import com.youaix.framework.page.Page;
+import com.youaix.framework.page.PageManager;
+import com.youaix.framework.page.UIXApplication;
+
 public abstract class Mission extends Thread
 {
 	private String mission = null;

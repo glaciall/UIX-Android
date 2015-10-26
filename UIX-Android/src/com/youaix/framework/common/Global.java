@@ -1,14 +1,10 @@
-package com.bobaoo.xiaobao.common;
+package com.youaix.framework.common;
 
-import com.baidu.android.pushservice.PushManager;
-import com.bobaoo.xiaobao.bean.User;
-import com.bobaoo.xiaobao.mission.JsonRequestor;
-import com.bobaoo.xiaobao.page.PageManager;
 
 public class Global
 {
 	private static Global instance = null;
-	private User user = null;
+	// private User user = null;
 	
 	private Global()
 	{
@@ -20,6 +16,7 @@ public class Global
 		return Configuration.getInstance().getProperty(key);
 	}
 	
+	/*
 	public static User getLoginUser() throws Exception
 	{
 		User user = getInstance().user;
@@ -33,24 +30,28 @@ public class Global
 		}
 		return getInstance().user;
 	}
+	*/
 	
+	/*
 	public static void login(String token, User user)
 	{
 		Configuration.getInstance().put("user-auth-token", token);
 		Global global = getInstance();
-		global.user = user;
+		// global.user = user;
 	}
+	*/
 	
 	public static void logout()
 	{
 		Global global = getInstance();
+		/*
 		global.user = null;
 		Configuration conf = Configuration.getInstance();
 		conf.put("user-id", 0);
 		conf.put("user-token", null);
 		conf.put("user-auth-token", null);
 		conf.put("baidu-push-user-bind", 0);
-		
+		*/
 		// TODO: 添加退出的处理，比如通知系统的注销
 	}
 	

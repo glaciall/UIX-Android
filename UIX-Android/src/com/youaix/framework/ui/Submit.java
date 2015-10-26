@@ -1,5 +1,8 @@
 package com.youaix.framework.ui;
 
+import com.youaix.framework.event.ClickEvent;
+import com.youaix.framework.page.Page;
+
 public class Submit extends Button
 {
 	public Submit()

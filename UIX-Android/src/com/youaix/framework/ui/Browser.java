@@ -1,5 +1,12 @@
 package com.youaix.framework.ui;
 
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.event.JavascriptInterface;
+import com.youaix.framework.event.LoadEvent;
+import com.youaix.framework.event.ProgressChangedEvent;
+import com.youaix.framework.event.RedirectEvent;
+import com.youaix.framework.page.PageManager;
+
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.webkit.WebChromeClient;

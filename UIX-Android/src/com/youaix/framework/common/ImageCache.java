@@ -6,17 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.bobaoo.xiaobao.page.Executable;
-import com.bobaoo.xiaobao.page.Page;
-import com.bobaoo.xiaobao.page.PageManager;
-import com.bobaoo.xiaobao.page.Resolution;
-import com.bobaoo.xiaobao.ui.Attribute;
-import com.bobaoo.xiaobao.ui.Div;
-import com.bobaoo.xiaobao.ui.Element;
-import com.bobaoo.xiaobao.view.FlowLayout;
-import com.bobaoo.xiaobao.view.ImageView;
-import com.bobaoo.xiaobao.view.MtScrollView;
-
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,6 +14,17 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.io.*;
+
+import com.youaix.framework.page.Executable;
+import com.youaix.framework.page.Page;
+import com.youaix.framework.page.PageManager;
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.ui.Attribute;
+import com.youaix.framework.ui.Div;
+import com.youaix.framework.ui.Element;
+import com.youaix.framework.view.FlowLayout;
+import com.youaix.framework.view.ImageView;
+import com.youaix.framework.view.MtScrollView;
 
 public final class ImageCache implements Runnable
 {
@@ -35,17 +35,17 @@ public final class ImageCache implements Runnable
 	public HashMap<ImageView, String> map = null;
 	public LinkedList<Page> pages = null;
 	
-	// 绫绘垚鍛�
+	// 类成员
 	private Object lock = null;
 	private boolean needsRecycle = false;
 	
-	// TODO: 杩樻湁鑳屾櫙鍥句篃闇�瑕佸洖鏀跺憿
+	// TODO: 还有背景图也需要回收呢
 	public static ImageCache instance = null;
 	
 	private ImageCache()
 	{
 		ActivityManager activityManager = (ActivityManager)PageManager.getInstance().getCurrent().getSystemService(Context.ACTIVITY_SERVICE);
-		// TODO: 闇�瑕佽皟鏁存鍙傛暟姣斾緥锛岀幇鍦ㄦ槸鐬庡啓鐨勶紝渚夸簬娴嬭瘯
+		// TODO: 需要调整此参数比例，现在是瞎写的，便于测试
 		MAX_CACHE_SIZE = (int)(activityManager.getMemoryClass() * 1024 * 1024 * 0.4f);
 		
 		bucket = new HashMap<String, Image>(300);
@@ -88,7 +88,7 @@ public final class ImageCache implements Runnable
 		return this.bucket.size();
 	}
 	
-	// 鏍囪褰撳墠闇�瑕佽繘琛屽洖鏀舵搷浣滀簡
+	// 标记当前需要进行回收操作了
 	public void noticeRecycleNeeded()
 	{
 		synchronized(lock)
@@ -97,18 +97,18 @@ public final class ImageCache implements Runnable
 		}
 	}
 	
-	// 鑾峰彇缂撳瓨瀹炰緥
+	// 获取缓存实例
 	public static synchronized ImageCache getInstance()
 	{
 		if (instance == null) instance = new ImageCache();
 		return instance;
 	}
 	
-	// 鍥剧墖宸卞氨缁�
+	// 图片己就绪
 	@java.lang.Deprecated
 	public void standby(String uri)
 	{
-		// 鍋氫簺浠�涔堝憿锛�
+		// 做些什么呢？
 		synchronized(lock)
 		{
 			Image img = bucket.get(uri);
@@ -122,22 +122,22 @@ public final class ImageCache implements Runnable
 		
 	}
 	
-	// 鏍囪涓哄彲鍥炴敹
+	// 标记为可回收
 	@Deprecated
 	public void markRecycable(String uri)
 	{
-		// TODO: 鍋氫簺浠�涔堝ソ鍛紵
-		// TODO: 瑕佷笉灏憋紝褰撳浘鐗囦笉鍦ㄥ彲瑙佽寖鍥村唴鏃讹紝灏辨妸鍥剧墖鏍囪涓哄彲鍥炴敹鐘舵�侊紝鍙娇鐢ㄤ竴涓姸鎬佹潵鎼炶繖浜�
-		// TODO: 閭ｄ箞锛宒efaultView杩欎釜灞炴�ф槸涓嶆槸鍙互涓嶇敤浜嗗憿锛�
+		// TODO: 做些什么好呢？
+		// TODO: 要不就，当图片不在可见范围内时，就把图片标记为可回收状态，只使用一个状态来搞这事
+		// TODO: 那么，defaultView这个属性是不是可以不用了呢？
 		synchronized(lock)
 		{
 			Image img = bucket.get(uri);
 			if (null == img) return;
-			// 鏀逛釜浠�涔堜笢瑗垮ソ鍛紵
+			// 改个什么东西好呢？
 		}
 	}
 	
-	// 浠庣紦瀛樹腑鑾峰彇涓�涓浘鐗�
+	// 从缓存中获取一个图片
 	public Bitmap get(String uri)
 	{
 		synchronized(lock)
@@ -200,7 +200,7 @@ public final class ImageCache implements Runnable
 		return get(uri);
 	}
 	
-	// 閫氳繃ImageView鏉ヨ幏鍙栧浘鐗�
+	// 通过ImageView来获取图片
 	public Bitmap get(ImageView iv)
 	{
 		String uri = map.get(iv);
@@ -208,7 +208,7 @@ public final class ImageCache implements Runnable
 		else return get(uri);
 	}
 	
-	// 娣诲姞uri涓巄itmap鐨勫搴旂紦瀛�
+	// 添加uri与bitmap的对应缓存
 	public void put(String uri, Bitmap bitmap)
 	{
 		int size = sizeOf(bitmap);
@@ -224,7 +224,7 @@ public final class ImageCache implements Runnable
 		}
 	}
 	
-	// 鍥剧墖缂╂斁
+	// 图片缩放
 	public void reset(String uri, int width, int height, int radius)
 	{
 		synchronized(lock)
@@ -237,7 +237,7 @@ public final class ImageCache implements Runnable
 		}
 	}
 	
-	// 娣诲姞ImageView涓嶶ri鐨勫搴斿叧绯�
+	// 添加ImageView与Uri的对应关系
 	public void put(ImageView iv, String uri)
 	{
 		synchronized(map)
@@ -252,7 +252,7 @@ public final class ImageCache implements Runnable
 				img = new Image(0, null);
 				bucket.put(uri, img);
 			}
-			// 娣诲姞ImageView寮曠敤鍒癐mage閲屽幓
+			// 添加ImageView引用到Image里去
 			img.refCount += 1;
 			img.addView(iv);
 		}
@@ -270,7 +270,7 @@ public final class ImageCache implements Runnable
 		}
 	}
 	
-	// 绉婚櫎ImageView涓嶶ri鐨勫搴斿叧绯�
+	// 移除ImageView与Uri的对应关系
 	public void dispose(ImageView iv, String uri)
 	{
 		synchronized(map)
@@ -287,7 +287,7 @@ public final class ImageCache implements Runnable
 		}
 	}
 	
-	// 璁＄畻浣嶅浘鎵�闇�瑕佸崰鐢ㄧ殑鍐呭瓨瀛楄妭鏁�
+	// 计算位图所需要占用的内存字节数
 	private static int sizeOf(Bitmap bitmap)
 	{
 		if (null == bitmap) return 0;
@@ -300,7 +300,7 @@ public final class ImageCache implements Runnable
 		return bitmap.getWidth() * bitmap.getHeight() * bits;
 	}
 	
-	// 浠庣紦瀛樻枃浠朵腑璇诲彇鍥剧墖
+	// 从缓存文件中读取图片
 	private Bitmap readCacheFile(String uri)
 	{
 		try
@@ -322,7 +322,7 @@ public final class ImageCache implements Runnable
 		return null;
 	}
 	
-	// 缂撳瓨涓槸鍚﹀瓨鍦ㄨUri琛ㄧず鐨勫浘鐗�
+	// 缓存中是否存在该Uri表示的图片
 	public boolean isCached(String uri)
 	{
 		Image img = bucket.get(uri);
@@ -333,7 +333,7 @@ public final class ImageCache implements Runnable
 	
 	public void run()
 	{
-		// TODO: 绾跨▼浠�涔堟椂鍊欏簲璇ュ仠姝紵浠�涔堟椂鍊欏簲璇ョ户缁紵
+		// TODO: 线程什么时候应该停止？什么时候应该继续？
 		while (true)
 		{
 			try
@@ -364,18 +364,18 @@ public final class ImageCache implements Runnable
 		return pss;
 	}
 	
-	// 鍥炴敹褰撳墠缂撳瓨涓殑鍥剧墖
+	// 回收当前缓存中的图片
 	private void recycle()
 	{
-		// TODO: 濡備綍鍥炴敹锛燂紵锛�
-		// TODO: 搴旇鏄彧鏈塇TTP鍗忚鐨勫浘鐗囨墠闇�瑕佺紦瀛樺埌鏂囦欢涓殑鍚�
-		// TODO: 濡傛灉鏂囦欢鏈潵灏辨槸浠庣紦瀛樻枃浠朵腑璇诲嚭鏉ョ殑锛岄偅灏变笉闇�瑕佸啀娆″啓鍥炲幓浜嗗惂锛�
+		// TODO: 如何回收？？？
+		// TODO: 应该是只有HTTP协议的图片才需要缓存到文件中的吧
+		// TODO: 如果文件本来就是从缓存文件中读出来的，那就不需要再次写回去了吧？
 		// android.util.Log.i("Image-Cache", "Max Size: " + (MAX_CACHE_SIZE / 1024 / 1024) + "M");
 		// android.util.Log.i("Image-Cache", "Cached Size: " + (totalCached / 1024 / 1024) + "M");
 		// android.util.Log.i("Image-Cache", "Cached Count: " + bucket.size());
 		// android.util.Log.i("Image-Cache", "Current PSS: " + (getTotalPss() / 1024) + "M");
-		// TODO: 鏌ユ壘refCount鏈�灏忕殑Image锛屾妸bitmap缁欐瘷鍜紝鐩村埌totalCached灏忎簬MAX_CACHE_SIZE涓烘
-		// TODO: 濡傛灉纭疄鏈夊鐞嗚繃鍥炴敹锛岄渶瑕佽皟鐢⊿ystem.gc()锛岃繕鏈塨itmap.recycle()
+		// TODO: 查找refCount最小的Image，把bitmap给毙咯，直到totalCached小于MAX_CACHE_SIZE为止
+		// TODO: 如果确实有处理过回收，需要调用System.gc()，还有bitmap.recycle()
 		
 		// if (this.totalCached < MAX_CACHE_SIZE) return;
 		synchronized(this.lock)
@@ -387,7 +387,7 @@ public final class ImageCache implements Runnable
 				Image img = bucket.get(uri);
 				if (img.isRecycable())
 				{
-					// TODO: 鍥炴敹鍥剧墖
+					// TODO: 回收图片
 					this.totalCached -= img.size;
 					img.recycle();
 					keys.remove();
@@ -395,33 +395,33 @@ public final class ImageCache implements Runnable
 			}
 		}
 		
-		// 鍥剧墖鐨勯噴鏀惧伐浣滄斁鍦ㄨ繖涓嚎绋嬮噷濡備綍
+		// 图片的释放工作放在这个线程里如何
 		
-		// TODO锛� 椤甸潰鍏抽棴鏃讹紝椤甸潰鍐呮墍鏈夌殑ImageView鐨刼nDettachedFromWindow搴旇閮戒細琚Е鍙戠殑鍚�		宸辩粡鍜岃皭
-		// TODO锛� 椤甸潰鍒囨崲鍒板悗鍙版椂锛屽浘鐗囬噴鏀惧伐浣滃彲浠ヤ氦缁欒繖涓嚎绋嬫潵鍋�								杩欎釜
+		// TODO： 页面关闭时，页面内所有的ImageView的onDettachedFromWindow应该都会被触发的吧		己经和谐
+		// TODO： 页面切换到后台时，图片释放工作可以交给这个线程来做								这个
 		synchronized(this.pages)
 		{
 			for (int i = 0, l = this.pages.size(); i < l; i++)
 			{
 				Page page = this.pages.remove();
-				page.find(com.bobaoo.xiaobao.ui.Image.class, recycleMission);
+				page.find(com.youaix.framework.ui.Image.class, recycleMission);
 			}
 		}
 		
-		// TODO锛� 椤甸潰鍐呮湁鍥剧墖鍏冪礌鍦ㄤ笉鍙鍖哄煙鏃讹紝鍙互閲婃斁鍏跺唴瀛�									杩欎釜
-		// 杩橳M鎬庝箞鏁达紵锛燂紵
-		// 鍙洖鏀朵袱灞忎互澶栫殑鍥剧墖璧勬簮
+		// TODO： 页面内有图片元素在不可见区域时，可以释放其内存									这个
+		// 这TM怎么整？？？
+		// 只回收两屏以外的图片资源
 		if (true) return;
 		Page currentPage = PageManager.getInstance().getCurrent();
-		// 鎵惧埌涓�涓彲婊氬姩鐨凞IV锛屽彧鎵句竴涓惂
+		// 找到一个可滚动的DIV，只找一个吧
 		Div container = (Div) find(currentPage.getContentPage());
 		if (null == container) return;
-		// 濡傛灉杩欎釜DIV鐨勫瓙鍏冪礌鐨勯珮搴︿笉澶燂紝灏变笉澶勭悊浜嗭紝鎬庝箞鏍风畻澶燂紵灞忓箷楂樺害鐨勫洓鍊嶄互涓婂惂
+		// 如果这个DIV的子元素的高度不够，就不处理了，怎么样算够？屏幕高度的四倍以上吧
 		if (container.getMeasuredHeight() < Resolution.getScreenHeightDip() * 4) return;
-		// 鏌ユ壘涓嬭竟鎵�鏈夌殑鍥剧墖锛屾槸鍚﹀湪鍙鑼冨洿鍐�
-		// 閬嶅巻鍏冪礌鐨勬墍鏈夊瓙鍏冪礌锛屽鏋滄槸DIV锛屽垯杩涗竴姝ラ�掑綊
-		// 濡傛灉鏄浘鐗囷紝鍒欑湅鏄惁鍦ㄥ彲瑙嗚寖鍥村唴
-		// 鍏堝仛绗簩姝ョ湅鐪嬪惂
+		// 查找下边所有的图片，是否在可视范围内
+		// 遍历元素的所有子元素，如果是DIV，则进一步递归
+		// 如果是图片，则看是否在可视范围内
+		// 先做第二步看看吧
 		MtScrollView sView = (MtScrollView)container.getWrapperView();
 		
 		xx(container, 0, 0, sView.getMeasuredWidth(), sView.getScrollY() - 300);
@@ -429,7 +429,7 @@ public final class ImageCache implements Runnable
 		// xx(container, sView.getScrollY(), sView.getScrollX(), sView.getMeasuredWidth(), sView.getMeasuredHeight());
 	}
 	
-	// 瀵绘壘涓嶅彲瑙佺殑鍥剧墖鍏冪礌锛屽洖鏀舵帀
+	// 寻找不可见的图片元素，回收掉
 	private void xx(Element target, int top, int left, int width, int height)
 	{
 		if (null == target) return;
@@ -439,8 +439,8 @@ public final class ImageCache implements Runnable
 			Element sub = childs.get(i);
 			
 			int t = 0, l = 0, w = 0, h = 0;
-			// 濡傛灉鏄釜鍥剧墖
-			if (sub instanceof com.bobaoo.xiaobao.ui.Image)
+			// 如果是个图片
+			if (sub instanceof com.youaix.framework.ui.Image)
 			{
 				ImageView iv = (ImageView)sub.getContentView();
 				t = 0;
@@ -454,13 +454,13 @@ public final class ImageCache implements Runnable
 				// }
 				
 				// android.util.Log.e("ImageCache-Recycle", "ready to recycle: " + ((com.bobaoo.xiaobao.ui.Image)sub).getSrc());
-				Image img = bucket.get(((com.bobaoo.xiaobao.ui.Image)sub).getSrc());
+				Image img = bucket.get(((com.youaix.framework.ui.Image)sub).getSrc());
 				if (null == img) return;
 				img.recycle();
 			}
 			if (!(sub instanceof Div)) continue;
-			// 濡傛灉瀹屽叏鍦ㄥ彲瑙佸尯鍩熷唴锛屽垯涓嶉渶瑕佹墽琛寈x鏂规硶浜�
-			// 濡傛灉鍏冪礌鐨勫ぇ灏忥紝涓嶈冻涓�涓睆骞曞ぇ灏忥紝骞朵笖鏈変竴閮ㄥ垎鍦ㄥ彲瑙佸尯鍩熷唴锛屼篃涓嶉渶瑕佹墽琛寈x鏂规硶浜�
+			// 如果完全在可见区域内，则不需要执行xx方法了
+			// 如果元素的大小，不足一个屏幕大小，并且有一部分在可见区域内，也不需要执行xx方法了
 			FlowLayout fl = (FlowLayout)sub.getContentView();
 			
 			// t = top - fl.getOffsetTop();
@@ -477,7 +477,7 @@ public final class ImageCache implements Runnable
 		}
 	}
 	
-	// 鏌ユ壘涓�涓瀭鐩存柟鍚戜笂婊氬姩鐨凞IV鍏冪礌
+	// 查找一个垂直方向上滚动的DIV元素
 	private Element find(Element node)
 	{
 		if (null == node) return null;
@@ -497,7 +497,7 @@ public final class ImageCache implements Runnable
 	{
 		public void modify(Element element)
 		{
-			Image img = bucket.get(((com.bobaoo.xiaobao.ui.Image)element).getSrc());
+			Image img = bucket.get(((com.youaix.framework.ui.Image)element).getSrc());
 			if (null == img) return;
 			img.recycle();
 		}
@@ -526,9 +526,9 @@ public final class ImageCache implements Runnable
 		
 		public Image(int size, Bitmap bitmap)
 		{
-			// TODO: ImageView鐨刼nDettachedFromWindow鍙互瑙ｅ喅removeChild鐨勯棶棰�
-			// TODO: 濂藉儚闇�瑕佽褰曡鍥剧墖閮借鍝簺ImageView缁欏紩鐢ㄤ簡锛屽綋琚紩鐢ㄦ暟涓洪浂鏃讹紝鍒欎负鍙洖鏀剁姸鎬�
-			// TODO: 鐢ㄨ寮曠敤璁℃暟濂藉憿锛熻繕鏄寮曠敤鐨勯槦鍒楀ソ鍛紵
+			// TODO: ImageView的onDettachedFromWindow可以解决removeChild的问题
+			// TODO: 好像需要记录该图片都被哪些ImageView给引用了，当被引用数为零时，则为可回收状态
+			// TODO: 用被引用计数好呢？还是被引用的队列好呢？
 			this.size = size;
 			this.state = Image.STATE_NORMAL;
 			this.bitmap = bitmap;
@@ -543,13 +543,13 @@ public final class ImageCache implements Runnable
 		
 		public boolean isRecycable()
 		{
-			// NOTE: 纭繚refCount鐨勫彲鐢ㄦ��
+			// NOTE: 确保refCount的可用性
 			if (this.refCount <= 0) return true;
 			
-			// 濡傛灉鏈�鍚庤闂椂闂存湁鐐归暱浜嗭紝涔熷洖鏀舵帀璇曡瘯
+			// 如果最后访问时间有点长了，也回收掉试试
 			// if (System.currentTimeMillis() - this.atime > 3000) return true;
 			
-			// NOTE: 妫�鏌ユ墍鏈夊紩鐢ㄧ殑ImageView鏄惁鍦ㄨ閲庤寖鍥村唴
+			// NOTE: 检查所有引用的ImageView是否在视野范围内
 			if (this.defaultView != null && this.defaultView.isInSight()) return false;
 			if (this.refViews == null) return true;
 			for (int i = 0; i < refViews.size(); i++)
@@ -564,7 +564,7 @@ public final class ImageCache implements Runnable
 			if (defaultView == null) defaultView = iv;
 			else
 			{
-				// TODO: 娣诲姞鍒板紩鐢ㄩ槦鍒椾腑鍘�
+				// TODO: 添加到引用队列中去
 				if (null == this.refViews) this.refViews = new LinkedList();
 				this.refViews.add(iv);
 			}
@@ -580,8 +580,8 @@ public final class ImageCache implements Runnable
 			}
 			else
 			{
-				// TODO: 鏌ユ壘涓�涓嬮摼琛ㄩ噷锛岃繖鏄摢涓浼�
-				// 搴旇鍙湁褰揤iew琚垹鎺夌殑鏃跺�欙紝鎵嶅彲浠ユ柇寮�杩欎釜鑱旂郴鐨勫惂
+				// TODO: 查找一下链表里，这是哪个家伙
+				// 应该只有当View被删掉的时候，才可以断开这个联系的吧
 				if (null == this.refViews) return;
 				for (int i = 0; i < this.refViews.size(); i++)
 				{
@@ -616,7 +616,7 @@ public final class ImageCache implements Runnable
 		
 		public void recycle()
 		{
-			// TODO: 娴嬭瘯锛屼笉鐭ラ亾refCount鏄惁鍑嗙‘
+			// TODO: 测试，不知道refCount是否准确
 			// if (this.refCount > 1) return;
 			if (this.bitmap != null && !this.bitmap.isRecycled())
 			{

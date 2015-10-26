@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 
+import com.youaix.framework.page.PageManager;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;

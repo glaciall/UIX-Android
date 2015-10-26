@@ -1,5 +1,17 @@
 ﻿package com.youaix.framework.ui;
 
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.event.ClickEvent;
+import com.youaix.framework.event.DragEvent;
+import com.youaix.framework.event.HoverEvent;
+import com.youaix.framework.event.LoadEvent;
+import com.youaix.framework.event.MoveEvent;
+import com.youaix.framework.event.PressEvent;
+import com.youaix.framework.event.TouchEvent;
+import com.youaix.framework.page.PageManager;
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.view.ImageView;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;

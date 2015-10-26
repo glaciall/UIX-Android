@@ -1,5 +1,7 @@
 package com.youaix.framework.ui;
 
+import com.youaix.framework.view.ProgressBarView;
+
 import android.view.View;
 
 public class ProgressBar extends Element

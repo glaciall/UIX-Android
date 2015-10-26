@@ -7,6 +7,8 @@ import java.util.TimerTask;
 
 import com.youaix.framework.common.Schema;
 import com.youaix.framework.page.PageManager;
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.ui.Attribute;
 
 import android.R;
 import android.content.Context;

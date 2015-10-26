@@ -3,6 +3,8 @@
 import java.io.*;
 import java.net.*;
 
+import com.youaix.framework.page.Resolution;
+
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 
 public final class Network

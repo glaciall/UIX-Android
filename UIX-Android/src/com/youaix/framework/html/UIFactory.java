@@ -12,6 +12,32 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.youaix.framework.common.Schema;
+import com.youaix.framework.common.Schema.Uri;
+import com.youaix.framework.ui.A;
+import com.youaix.framework.ui.Browser;
+import com.youaix.framework.ui.Button;
+import com.youaix.framework.ui.Checkbox;
+import com.youaix.framework.ui.Div;
+import com.youaix.framework.ui.Element;
+import com.youaix.framework.ui.File;
+import com.youaix.framework.ui.Gif;
+import com.youaix.framework.ui.Hidden;
+import com.youaix.framework.ui.Hr;
+import com.youaix.framework.ui.Image;
+import com.youaix.framework.ui.Input;
+import com.youaix.framework.ui.Option;
+import com.youaix.framework.ui.Password;
+import com.youaix.framework.ui.ProgressBar;
+import com.youaix.framework.ui.Radiobox;
+import com.youaix.framework.ui.Radiogroup;
+import com.youaix.framework.ui.Select;
+import com.youaix.framework.ui.Shape;
+import com.youaix.framework.ui.Slideshow;
+import com.youaix.framework.ui.Span;
+import com.youaix.framework.ui.Submit;
+import com.youaix.framework.ui.Textarea;
+
 public class UIFactory {
 	private static String FMT_INTEGER = "(?is)^(bg_(top|middle|bottom|left|center|right)|pos_center|pos_middle|horizontal|vertical|left|center|wrap_content|right|top|middle|bottom|red|blue|green|black|grey|white|fill_rest)|(#[0-9a-f]{6,8})|(-?\\d+(px)?)$";
 	private static String FMT_FLOAT = "^\\d+%$";
@@ -31,32 +57,32 @@ public class UIFactory {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static com.bobaoo.xiaobao.ui.Element build(com.bobaoo.xiaobao.common.Schema.Uri uri) throws Exception
+	public static Element build(Schema.Uri uri) throws Exception
 	{
 		return execute(UniversalUtil.getDOM(uri).getDocumentElement(), null, null);
 	}
 
-	public static com.bobaoo.xiaobao.ui.Element build(Uri uri, JSONArray list) throws Exception
+	public static Element build(Uri uri, JSONArray list) throws Exception
 	{
 		return build(UniversalUtil.getDOM(uri), list, new Div());
 	}
 
-	public static com.bobaoo.xiaobao.ui.Element build(Uri uri, JSONArray list, Element root) throws Exception
+	public static Element build(Uri uri, JSONArray list, Element root) throws Exception
 	{
 		return build(UniversalUtil.getDOM(uri), list, root);
 	}
 
-	public static com.bobaoo.xiaobao.ui.Element build(String html) throws Exception
+	public static Element build(String html) throws Exception
 	{
 		return execute(UniversalUtil.getDOM(html).getDocumentElement(), null, null);
 	}
 
-	public static com.bobaoo.xiaobao.ui.Element build(String html, JSONArray list, Element root) throws Exception
+	public static Element build(String html, JSONArray list, Element root) throws Exception
 	{
 		return build(UniversalUtil.getDOM(html), list, root);
 	}
 
-	public static com.bobaoo.xiaobao.ui.Element build(Document doc, JSONArray list, Element root) throws Exception
+	public static Element build(Document doc, JSONArray list, Element root) throws Exception
 	{
 		for (int i = 0; i < list.length(); i++)
 		{
@@ -84,7 +110,7 @@ public class UIFactory {
 		return root;
 	}
 
-	public static com.bobaoo.xiaobao.ui.Element execute(Node rootNode, Formatter formatter, Object data) throws Exception
+	public static Element execute(Node rootNode, Formatter formatter, Object data) throws Exception
 	{
 		if (rootNode.getNodeType() == 3)
 		{
@@ -92,7 +118,7 @@ public class UIFactory {
 		}
 		
 		Class tagCls = createElement(rootNode.getNodeName());
-		com.bobaoo.xiaobao.ui.Element node = (com.bobaoo.xiaobao.ui.Element) tagCls.newInstance();
+		Element node = (Element) tagCls.newInstance();
 		// build all the children nodes
 		NodeList children = rootNode.getChildNodes();
 		for (int i = 0; !rootNode.getNodeName().equals("span")
@@ -327,7 +353,7 @@ public class UIFactory {
 		return methodName.toString();
 	}
 
-	private static Class<? extends com.bobaoo.xiaobao.ui.Element> createElement(String tagName) throws Exception
+	private static Class<? extends Element> createElement(String tagName) throws Exception
 	{
 		if ("span".equals(tagName)) return Span.class;
 		if ("div".equals(tagName)) return Div.class;
@@ -350,7 +376,6 @@ public class UIFactory {
 		if ("browser".equals(tagName)) return Browser.class;
 		if ("slideshow".equals(tagName)) return Slideshow.class;
 		if ("progressbar".equals(tagName)) return ProgressBar.class;
-		if ("timer".equals(tagName)) return Timer.class;
 		if ("shape".equals(tagName)) return Shape.class;
 
 		throw new Exception("undefined tag: " + tagName);

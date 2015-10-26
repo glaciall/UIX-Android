@@ -20,7 +20,10 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.*;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.youaix.framework.ui.Div;
+import com.youaix.framework.ui.Element;
 import com.youaix.framework.ui.List;
+import com.youaix.framework.view.FlowLayout;
 
 public abstract class ListPage extends Page
 {

@@ -1,5 +1,7 @@
 ﻿package com.youaix.framework.common;
 
+import com.youaix.framework.page.PageManager;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;

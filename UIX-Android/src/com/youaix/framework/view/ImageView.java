@@ -2,6 +2,7 @@ package com.youaix.framework.view;
 
 import com.youaix.framework.common.ImageCache;
 import com.youaix.framework.common.Schema;
+import com.youaix.framework.page.Resolution;
 import com.youaix.framework.ui.Attribute;
 
 import android.content.Context;

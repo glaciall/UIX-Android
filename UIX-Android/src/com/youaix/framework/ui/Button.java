@@ -1,5 +1,14 @@
 ﻿package com.youaix.framework.ui;
 
+import com.youaix.framework.event.ClickEvent;
+import com.youaix.framework.event.DragEvent;
+import com.youaix.framework.event.HoverEvent;
+import com.youaix.framework.event.MoveEvent;
+import com.youaix.framework.event.PressEvent;
+import com.youaix.framework.event.TouchEvent;
+import com.youaix.framework.page.Resolution;
+import com.youaix.framework.view.FlatButton;
+
 import android.view.View;
 import android.view.MotionEvent;
 
@@ -27,7 +36,7 @@ public class Button extends Element
 
     public Button setBorderWidth(int size)
     {
-        size = com.bobaoo.xiaobao.page.Resolution.pixels(size);
+        size = Resolution.pixels(size);
         this.view.setBorderWidth(size);
         return this;
     }

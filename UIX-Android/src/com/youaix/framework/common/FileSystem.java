@@ -9,8 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import com.bobaoo.xiaobao.page.PageManager;
-import com.bobaoo.xiaobao.page.Resolution;
+import com.youaix.framework.page.PageManager;
 
 import android.content.ContentResolver;
 import android.content.Context;

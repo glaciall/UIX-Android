@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
 
+import com.youaix.framework.page.PageManager;
+
 import android.content.*;
 import android.content.SharedPreferences.Editor;
 
