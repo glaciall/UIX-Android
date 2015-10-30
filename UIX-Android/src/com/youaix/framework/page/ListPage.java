@@ -17,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/*
 import com.handmark.pulltorefresh.library.*;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -184,3 +185,4 @@ public abstract class ListPage extends Page
 			((PullToRefreshListView)this.list.getContentView()).onRefreshComplete();
 	}
 }
+*/

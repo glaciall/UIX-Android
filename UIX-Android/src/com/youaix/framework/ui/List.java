@@ -4,6 +4,7 @@ import android.view.View;
 
 public class List extends Element
 {
+	/*
 	PullToRefreshListView view = null;
 	
 	public List()
@@ -14,5 +15,11 @@ public class List extends Element
 	public View getContentView()
 	{
 		return this.view;
+	}
+	*/
+	
+	public View getContentView()
+	{
+		return null;
 	}
 }
