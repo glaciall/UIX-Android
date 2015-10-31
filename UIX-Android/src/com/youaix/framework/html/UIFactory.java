@@ -1,5 +1,6 @@
 package com.youaix.framework.html;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -14,6 +15,8 @@ import org.w3c.dom.NodeList;
 
 import com.youaix.framework.common.Schema;
 import com.youaix.framework.common.Schema.Uri;
+import com.youaix.framework.event.ClickEvent;
+import com.youaix.framework.page.Page;
 import com.youaix.framework.ui.A;
 import com.youaix.framework.ui.Browser;
 import com.youaix.framework.ui.Button;
@@ -193,9 +196,16 @@ public class UIFactory {
 
 			if (null == method)
 			{
-				method = tagCls.getMethod("setAttribute", String.class, String.class);
-				if (formatter != null) attrValue = (String)formatter.format(attrValue);
-				method.invoke(node, attr.getNodeName(), attrValue);
+				if (attr.getNodeName().matches("^on(click|focus)$"))
+				{
+					bindEvent(node, attr.getNodeName(), attrValue);
+				}
+				else
+				{
+					method = tagCls.getMethod("setAttribute", String.class, String.class);
+					if (formatter != null) attrValue = (String)formatter.format(attrValue);
+					method.invoke(node, attr.getNodeName(), attrValue);
+				}
 			}
 			else
 			{
@@ -220,6 +230,42 @@ public class UIFactory {
 			}
 		}
 		return node;
+	}
+	
+	private static void bindEvent(Element target, String event, final String evtMethodName) throws Exception
+	{
+		if ("onclick".equals(event))
+		{
+			Method eventMethod = target.getClass().getDeclaredMethod("onClick", new Class[] { ClickEvent.class });
+			eventMethod.invoke(target, new ClickEvent()
+			{
+				public void on(Page page, Element element)
+				{
+					try
+					{
+						Method evtMethodInPage = page.getClass().getDeclaredMethod(evtMethodName, new Class[] { Element.class });
+						evtMethodInPage.invoke(page, element);
+					}
+					catch(NoSuchMethodException e)
+					{
+						e.printStackTrace();
+					}
+					catch(IllegalAccessException e)
+					{
+						e.printStackTrace();
+					}
+					catch(IllegalArgumentException e)
+					{
+						e.printStackTrace();
+					}
+					catch(InvocationTargetException e)
+					{
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		else throw new Exception("无此事件：" + event);
 	}
 
 	public static Method getMethod(Class cls, String attrName,
