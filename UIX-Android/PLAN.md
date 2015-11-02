@@ -31,6 +31,28 @@
 
 ##还有哪些要添加进来的呢？
 ###动画
+```java
+// 大小变换
+// 颜色变换
+// 位置变换
+// 透明度
+target
+	.from(Alpha.v(100), Color.v(0xff0000))
+    .to(Alpha.v(0), Color.v(0xffffff))
+    .start(Speed.FAST);
+```
 ###手势
-###样式表，借鉴XSLT
-###模版，用我以前的那一套
+###样式表，借鉴XSLT和CSS
+```css
+div[id=abc] span a
+{
+	color: #ff0000;
+    hover-color: #ff00ff;
+}
+#abc span
+{
+	width:100px;
+    height:100px;
+}
+```
+###模版，使用XML标签来作模板
