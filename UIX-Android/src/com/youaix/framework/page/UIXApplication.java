@@ -12,6 +12,8 @@ import android.os.Vibrator;
 
 public class UIXApplication extends Application
 {
+	/*
+	// TODO: missions可能会变成null值
 	private HashMap<String, Mission> missions = null;
 	
 	public void onCreate()
@@ -59,4 +61,5 @@ public class UIXApplication extends Application
 		Mission mission = this.missions.get(missionName);
 		if (mission != null) mission.resumeMission();
 	}
+	*/
 }

@@ -9,7 +9,7 @@ public class Textarea extends Input
 		super();
 		this.view.setSingleLine(false);
 		this.view.setGravity(Gravity.TOP);
-		this.setWidth(1.0f);
+		this.setWidthPercent(1.0f);
 		this.setHeight(60);
 	}
 

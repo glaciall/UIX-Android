@@ -14,7 +14,8 @@ public class Hr extends Element
     {
     	super();
         this.view = new HorizontalLine(getContext());
-        super.setWidth(1.0f);
+        super.setWidthPercent(1.0f);
+        super.setMargin(10, 0);
         this.setSize(1);
     }
 
@@ -24,9 +25,9 @@ public class Hr extends Element
 		return this;
 	}
 
-    public Hr setWidth(float width)
+    public Hr setWidthPercent(float width)
     {
-        super.setWidth(width);
+        super.setWidthPercent(width);
         return this;
     }
 

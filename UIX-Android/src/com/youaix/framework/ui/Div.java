@@ -54,7 +54,7 @@ public final class Div extends Element
     {
     	super();
         this.view = new FlowLayout(getContext());
-        this.setWidth(1.0f);
+        this.setWidthPercent(1.0f);
     }
     
     public boolean isScrollable()
@@ -212,15 +212,15 @@ public final class Div extends Element
 		return this;
 	}
 
-    public Div setWidth(float width)
+    public Div setWidthPercent(float width)
     {
-        super.setWidth(width);
+        super.setWidthPercent(width);
         return this;
     }
 
-    public Div setHeight(float height)
+    public Div setHeightPercent(float height)
     {
-        super.setHeight(height);
+        super.setHeightPercent(height);
         return this;
     }
 

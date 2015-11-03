@@ -8,14 +8,14 @@ public abstract class Mission extends Thread
 {
 	private String mission = null;
 	protected Callbackable receiver = null;
-	protected UIXApplication application = null;
+	// protected UIXApplication application = null;
 	
 	public Mission(String mission, Callbackable receiver)
 	{
 		this.mission = mission;
 		this.receiver = receiver;
-		this.application = ((UIXApplication)((Page)this.receiver).getApplication());
-		this.application.newMission(mission, this);
+		// this.application = ((UIXApplication)((Page)this.receiver).getApplication());
+		// this.application.newMission(mission, this);
 	}
 	
 	protected void reportProgress(float percent)
@@ -36,7 +36,7 @@ public abstract class Mission extends Thread
 		try
 		{
 			super.stop();
-			this.application.missionCompleted(this.mission);
+			// this.application.missionCompleted(this.mission);
 		}
 		catch(Throwable e)
 		{

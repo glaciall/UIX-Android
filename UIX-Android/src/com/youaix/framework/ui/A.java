@@ -109,8 +109,8 @@ public class A extends Element
 		// 如果是百分比的宽度，则子元素100%，父元素使用子元素的宽度比
 		if (el.widthPercent > -1.0f)
 		{
-			this.setWidth(el.widthPercent);
-			el.setWidth(1.0f);
+			this.setWidthPercent(el.widthPercent);
+			el.setWidthPercent(1.0f);
 		}
 		else
 		{
@@ -120,8 +120,8 @@ public class A extends Element
 		// 如果是百分比的高度，则子元素100%，父元素使用子元素的高度比
 		if (el.heightPercent > -1.0f)
 		{
-			this.setHeight(el.heightPercent);
-			el.setHeight(1.0f);
+			this.setHeightPercent(el.heightPercent);
+			el.setHeightPercent(1.0f);
 		}
 		else
 		{

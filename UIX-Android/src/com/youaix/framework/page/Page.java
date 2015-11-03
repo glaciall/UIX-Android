@@ -123,7 +123,7 @@ public abstract class Page extends Activity implements Callbackable
 		if (null != navigator) bodyHeight -= navigator.getHeightDip();
 
 		Element ele = this.createBody();
-		contentPage.append(ele.setHeight(bodyHeight)).append(navigator).append(new Div().setHeight(1.0f).setTop(0).setLeft(0).vanish().setId("mask-layer"));
+		contentPage.append(ele.setHeight(bodyHeight)).append(navigator).append(new Div().setHeightPercent(1.0f).setTop(0).setLeft(0).vanish().setId("mask-layer"));
 		
 		this.setContentView(contentPage.getContentView(), contentPage.getLayout());
 	}
@@ -974,6 +974,7 @@ public abstract class Page extends Activity implements Callbackable
 	
 	/////////////////////////////////////////////////////////////////////////
 	//// 增强型Mission相关
+	/*
 	public final void stopMission(String missionName)
 	{
 		((UIXApplication)this.getApplication()).stopMission(missionName);
@@ -993,4 +994,5 @@ public abstract class Page extends Activity implements Callbackable
 	{
 		return ((UIXApplication)this.getApplication()).getMissionData(missionName, field);
 	}
+	*/
 }

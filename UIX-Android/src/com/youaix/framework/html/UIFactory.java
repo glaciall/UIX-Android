@@ -24,7 +24,6 @@ import com.youaix.framework.ui.Checkbox;
 import com.youaix.framework.ui.Div;
 import com.youaix.framework.ui.Element;
 import com.youaix.framework.ui.File;
-import com.youaix.framework.ui.Gif;
 import com.youaix.framework.ui.Hidden;
 import com.youaix.framework.ui.Hr;
 import com.youaix.framework.ui.Image;
@@ -413,7 +412,6 @@ public class UIFactory {
 		if ("checkbox".equals(tagName)) return Checkbox.class;
 		if ("radiogroup".equals(tagName)) return Radiogroup.class;
 		if ("radiobox".equals(tagName)) return Radiobox.class;
-		if ("gif".equals(tagName)) return Gif.class;
 		if ("hidden".equals(tagName)) return Hidden.class;
 		if ("file".equals(tagName)) return File.class;
 		if ("textarea".equals(tagName)) return Textarea.class;

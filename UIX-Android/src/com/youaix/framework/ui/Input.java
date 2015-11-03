@@ -109,7 +109,7 @@ public class Input extends Element
 		this.view.setBackgroundDrawable(null);
 		this.view.setTextSize(12);
 		this.view.setSingleLine();
-		this.setWidth(1.0f);
+		this.setWidthPercent(1.0f);
 
 		// 设置为单行文本
 		this.view.setTransformationMethod(SingleLineTransformationMethod.getInstance());

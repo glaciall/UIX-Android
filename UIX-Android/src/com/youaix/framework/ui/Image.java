@@ -157,9 +157,9 @@ public final class Image extends Element
 	}
 	
 	@Override
-	public Image setWidth(float widthPercent)
+	public Image setWidthPercent(float widthPercent)
 	{
-		return (Image)super.setWidth(widthPercent);
+		return (Image)super.setWidthPercent(widthPercent);
 	}
 	
 	@Override
@@ -169,9 +169,9 @@ public final class Image extends Element
 	}
 	
 	@Override
-	public Image setHeight(float heightPercent)
+	public Image setHeightPercent(float heightPercent)
 	{
-		return (Image)super.setHeight(heightPercent);
+		return (Image)super.setHeightPercent(heightPercent);
 	}
 
 	private boolean isSetted = false;

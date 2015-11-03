@@ -92,6 +92,22 @@ public abstract class Element {
 		return PageManager.getInstance().getElementById(id);
 	}
 	
+	public final Element find(String id)
+	{
+		for (int i = 0; i < this.children.size(); i++)
+		{
+			Element child = this.children.get(i);
+			if (id.equals(child.getId())) return child;
+		}
+		for (int i = 0; i < this.children.size(); i++)
+		{
+			Element child = this.children.get(i);
+			Element target = child.find(id);
+			if (target != null) return target;
+		}
+		return null;
+	}
+	
 	public abstract View getContentView();
 	
 	public View getWrapperView()
@@ -670,7 +686,7 @@ public abstract class Element {
 		return this;
 	}
 
-	public Element setWidth(float percent)
+	public Element setWidthPercent(float percent)
 	{
 		this.width = -2;
 		this.widthPercent = percent;
@@ -678,7 +694,7 @@ public abstract class Element {
 		return this;
 	}
 
-	public Element setHeight(float percent)
+	public Element setHeightPercent(float percent)
 	{
 		this.height = -2;
 		this.heightPercent = percent;
